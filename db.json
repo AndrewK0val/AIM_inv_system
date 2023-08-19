@@ -1,0 +1,44 @@
+{
+  "categories": [
+    {
+      "id": 1,
+      "name": "Category 1",
+      "items": [
+        {
+          "id": 18364256,
+          "name": "Item 1",
+          "quantity": 2,
+          "price": 10.0,
+          "image": "https://via.placeholder.com/150"
+        },
+        {
+          "id": 27628742,
+          "name": "Item 2",
+          "quantity": 2,
+          "price": 20.0,
+          "image": "https://via.placeholder.com/150"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Category 2",
+      "items": [
+        {
+          "id": 157986783,
+          "name": "Item 3",
+          "quantity": 2,
+          "price": 30.0,
+          "image": "https://via.placeholder.com/150"
+        },
+        {
+          "id": 324869514,
+          "name": "Item 4",
+          "quantity": 2,
+          "price": 40.0,
+          "image": "https://via.placeholder.com/150"
+        }
+      ]
+    }
+  ]
+}

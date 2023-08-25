@@ -4,25 +4,37 @@ import Dashboard from "./dashboard";
 import exportFromJSON from 'export-from-json'
 import axios from "axios";
 
+var IpAddress = "localhost";
+// var IpAddress = "192.168.0.174";
 
 
 export default function CardsList(props){
     const [item, setItem] = useState([]);
+    const [category, setCategory] = useState([]);
     const [stats, setStats] = useState(null);
     const [data, setData] = useState([])
 
-    const loadItemsData = async () => {
-        return await axios
-            .get("http://192.168.0.174:3004/items/")
-            .then((response) => setData(response.data))
-            .catch((err) => console.log(err))
-    }
+    // const loadItemsData = async () => {
+    //     return await axios
+    //         .get("http://192.168.0.174:3004/items/")
+    //         .then((response) => setData(response.data))
+    //         .catch((err) => console.log(err))
+    // }
 
     console.log("data", data)
 
   
     function fetchItems() {
       return fetch("http://192.168.0.174:3004/items/").then((response) => {
+        if (!response.ok) {
+          throw new Error("Unexpected Server response");
+        }
+        return response.json();
+      });
+    }
+
+    function fetchCategories() {
+      return fetch("http://192.168.0.174:3006/categories/").then((response) => {
         if (!response.ok) {
           throw new Error("Unexpected Server response");
         }
@@ -56,9 +68,10 @@ export default function CardsList(props){
     }
   
     useEffect(() => {
-      loadItemsData()
+      // loadItemsData()
       fetchItems().then((data) => setItem(data));
       displayStats();
+      fetchCategories().then((data) => setCategory(data));
     }, []);
   
     function deleteItem(id) {
@@ -73,6 +86,10 @@ export default function CardsList(props){
         props.showForm(item);
       }
 
+      function sortItemsByCategory(items){
+
+
+      }
 
 
 
@@ -142,13 +159,31 @@ export default function CardsList(props){
         </div> */}
 
         {/* <Dashboard showForm={showForm} /> */}
+        <div className="categoryDiv">
+          {category.map((category, id) => {
+            // Filter the items that match the current category
+            const filteredItems = item.filter((item) => item.category === category);
+            const typesOfItems = filteredItems.length;
+            const numberOfItemsPerCategory = countItemsInStock(filteredItems);
+            return (
+              <>
+                <h1>  {category} - {typesOfItems} {typesOfItems === 1 ? 'Type' : 'Types'}, {numberOfItemsPerCategory} {numberOfItemsPerCategory === 1 ? 'item' : 'items'}</h1>
+                <div className="divBar-thin"></div>
+                {filteredItems.map((item, id) => (
 
-        <div className="container-lg" id="cardContainer">
+                    <Card item={item} key={id} deleteItem={deleteItem} editCSV={handleClick} />
+
+                ))}
+              </>
+            );
+          })}
+        </div>
+        {/* <div  id="cardContainer">
                     
           {item.map((item, id) => (
             <Card item={item} key={id} deleteItem={deleteItem} editCSV={handleClick} />
           ))}
-        </div>
+        </div> */}
       </div>
     );
 

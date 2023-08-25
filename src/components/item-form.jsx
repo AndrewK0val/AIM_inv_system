@@ -2,8 +2,17 @@ import React, { useState, useEffect } from "react";
 const fs = require('fs');
 
 
+
+
 export default function ItemForm(props){
     const [errorMessage, setErrorMessage] = useState("")
+
+    const [showItemsInPack, setShowItemsInPack] = useState(props.item.price_type === 'pack');
+
+    function handlePriceTypeChange(event) {
+    const value = event.target.value;
+    setShowItemsInPack(value === 'pack');
+    }
 
     function handleSubmit(event){
         event.preventDefault();
@@ -45,7 +54,7 @@ export default function ItemForm(props){
         //   saveGroupedItemsToFile('../db-backup.json');
 
         //form validation
-        if(!item.name || !item.barcode || !item.quantity || !item.category || !item.image){
+        if(!item.name || !item.barcode || !item.quantity || !item.category || !item.price_type || !item.price){
 
             console.log("please fill out all fields")
             setErrorMessage(
@@ -53,6 +62,10 @@ export default function ItemForm(props){
                     Please fill out all fields.
                 </div>);
             return;
+        }
+
+        if(!item.image){
+            item.image = "https://www.thermaxglobal.com/wp-content/uploads/2020/05/image-not-found.jpg"
         }
 
         if(isNaN(item.quantity)){
@@ -146,12 +159,13 @@ export default function ItemForm(props){
                                     €
                                     <input type="number" className="col-sm-4" name="price" defaultValue={props.item.price} />
                                     <p>per</p>
-                                    <select className="col" name="price_type" id="" defaultValue={props.item.price_type}>
-                                    <option value="pack">Pack</option>
+                                    <select className="col" name="price_type" id="" defaultValue={props.item.price_type} onChange={handlePriceTypeChange}>
                                     <option value="single item">Single Item</option>
+                                    <option value="pack">Pack</option>
                                     </select>
-                                    <p>of</p>
-                                    <input type="number" className="col-sm-4" name="items_in_pack" defaultValue={props.item.items_in_pack} />
+                                    {showItemsInPack && <p>of</p>}
+
+                                    {showItemsInPack &&  <input type="number" className="col-sm-4" name="items_in_pack" defaultValue={props.item.items_in_pack} />}
                                 </div>
                             </div>
 
@@ -167,10 +181,10 @@ export default function ItemForm(props){
                                     defaultValue={props.item.category}>
                                     <option value="Bolts"> Bolts</option>
                                     <option value="Nuts"> Nuts</option>
-                                    <option value="Sheets"> Sheets</option>
+                                    <option value="Sheet-Metal"> Sheet Metal</option>
                                     <option value="Screws"> Screws</option>
                                     <option value="Misc"> Misc</option>
-                                    <option value="Welding-Equiptment"> Welding Equiptment</option>
+                                    <option value="Fittings"> Fittings</option>
                                     <option value="Welding-Equiptment"> Welding Equiptment</option>
 
 

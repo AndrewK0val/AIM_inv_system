@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import exportFromJSON from 'export-from-json'
+
+
 
 export default function Dashboard(props){
     // const item = props
@@ -63,6 +66,8 @@ export default function Dashboard(props){
             <h5 className="text-center mb-3" id="stats-1">
                 {stats ? `${stats.totalItems} total items in stock` : "Loading..."}{" "}
             </h5>
+            <div className="divBar-thin"></div>
+
         <div className="rowOfOptions">
             <button
                 onClick={() => props.showForm({})}

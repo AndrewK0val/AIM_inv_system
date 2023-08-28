@@ -1,9 +1,9 @@
 {
   "items": [
     {
-      "name": "60mm nuts",
+      "name": "60mm steel",
       "barcode": "807967",
-      "quantity": 17,
+      "quantity": 19,
       "category": "Nuts",
       "image": "data:image/jpeg;base64,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",
       "id": "P78TB1i",
@@ -15,7 +15,7 @@
     {
       "name": "3x2m aluminium",
       "barcode": "87655",
-      "quantity": "97",
+      "quantity": 98,
       "category": "Sheet-Metal",
       "image": "https://m.media-amazon.com/images/I/61DdjN35LQL.jpg",
       "id": "-PYe-Zl",
@@ -25,9 +25,9 @@
       "items_in_pack": ""
     },
     {
-      "name": "argon gas (5L)",
+      "name": "argon (5L)",
       "barcode": "897876",
-      "quantity": "22",
+      "quantity": 23,
       "brand": "",
       "price": "50",
       "category": "Welding-Equiptment",
@@ -39,7 +39,7 @@
     {
       "name": "hardened steel rods",
       "barcode": "67289089",
-      "quantity": "100",
+      "quantity": 0,
       "brand": "abc",
       "price": "60",
       "price_type": "pack",
@@ -50,10 +50,10 @@
     },
     {
       "name": "2x2m steel",
-      "barcode": "78654321456887654356776890",
-      "quantity": "4514",
+      "barcode": "7865456776890",
+      "quantity": 46,
       "brand": "",
-      "price": "527",
+      "price": "52",
       "price_type": "single item",
       "category": "Sheet-Metal",
       "image": "https://m.media-amazon.com/images/I/61DdjN35LQL.jpg",
@@ -62,9 +62,9 @@
     {
       "name": "welding rods ",
       "barcode": "24278",
-      "quantity": "100",
+      "quantity": 103,
       "brand": "",
-      "price": "50",
+      "price": "60",
       "price_type": "pack",
       "items_in_pack": "30",
       "category": "Welding-Equiptment",
@@ -72,9 +72,9 @@
       "id": "oxQhj3d"
     },
     {
-      "name": "M4 bolts ",
+      "name": "M4 12mm hardened steel",
       "barcode": "09682567",
-      "quantity": 1002,
+      "quantity": 7,
       "brand": "",
       "price": "50",
       "price_type": "pack",
@@ -86,7 +86,7 @@
     {
       "name": "2x2m stainless steel",
       "barcode": "7896726",
-      "quantity": 47,
+      "quantity": 0,
       "brand": "",
       "price": "50",
       "price_type": "pack",
@@ -97,10 +97,10 @@
     },
     {
       "name": "50mm steel pipe (3m)",
-      "barcode": "98765",
-      "quantity": "12",
+      "barcode": "8763245",
+      "quantity": 878,
       "brand": "",
-      "price": "50",
+      "price": "52.5",
       "price_type": "pack",
       "items_in_pack": "3",
       "category": "Misc",
@@ -110,13 +110,47 @@
     {
       "name": "6x2m zinc",
       "barcode": "863289854",
-      "quantity": "987",
+      "quantity": 9,
       "brand": "",
       "price": "50",
       "price_type": "single item",
       "category": "Sheet-Metal",
       "image": "https://www.thermaxglobal.com/wp-content/uploads/2020/05/image-not-found.jpg",
       "id": "hwUoE-g"
+    },
+    {
+      "name": "8mm stainless",
+      "barcode": "8907867656",
+      "quantity": 35,
+      "brand": "",
+      "price": "10",
+      "price_type": "pack",
+      "items_in_pack": "100",
+      "category": "Nuts",
+      "image": "https://m.media-amazon.com/images/I/71lwZc4eF3L._AC_SL1500_.jpg",
+      "id": "TRn8FDS"
+    },
+    {
+      "name": "10mm M5 ",
+      "barcode": "87867",
+      "quantity": 134,
+      "price": "7",
+      "price_type": "pack",
+      "items_in_pack": "100",
+      "image": "https://m.media-amazon.com/images/I/71lwZc4eF3L._AC_SL1500_.jpg",
+      "category": "Nuts",
+      "id": "UY3wcW6"
+    },
+    {
+      "name": "M3 (3mm) Hex Nut (Heavy) - Stainless Steel (A2)",
+      "image": "https://m.media-amazon.com/images/I/71+cDb4EQnL._AC_SL1500_.jpg",
+      "category": "Nuts",
+      "price": "30",
+      "price_type": "pack",
+      "items_in_pack": "100",
+      "barcode": "587248",
+      "quantity": 499,
+      "id": "707q7Mx"
     }
   ]
 }

@@ -1,79 +1,84 @@
 import React, { useState, useEffect } from "react";
-const fs = require('fs');
+
+var IpAddress = "192.168.0.174";
+
 
 
 export default function CategoryForm(props){
-
-    
-    function fetchItems() {
-        return fetch("http://192.168.0.174:3004/items/").then((response) => {
-            if (!response.ok) {
-                throw new Error("Unexpected Server response");
-            }
-            return response.json();
-        });
-    }
-    const [item, setItem] = useState([]);
+    // const [item, setItem] = useState([]);
     const [category, setCategory] = useState([]);
 
-    useEffect(() => {
-        fetchItems().then((data) => setItem(data));
+    
+
+    function fetchCategories() {
+        return fetch("http://192.168.0.174:3006/categories/").then((response) => {
+          if (!response.ok) {
+            throw new Error("Unexpected Server response");
+          }
+          return response.json();
+        });
+      }
+
+      useEffect(() => {
+        // loadItemsData()
+        fetchCategories().then((data) => setCategory(data));
       }, []);
+      
     
+      function handleSubmit(event) {
+        event.preventDefault();
+        fetch("http://192.168.0.174:3006/categories/", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ category }),
+        })
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Unexpected Server Response");
+            }
+            return response.json();
+          })
+          .then((data) => props.showList())
+          .catch((error) => {
+            console.log("Error: ", error);
+          });
+      }
 
-    // function getListOfCategories(items){
-    //     var categories = [];
-    //     for(const item of items){
-    //       if(!categories.includes(item.category)){
-    //         categories.push(item.category);
-    //       } 
-    //     }
-    //     console.log(categories);
-    //     //send categories to server
-    //     fetch('http://localhost:3000/categories', {
-    //         method: 'POST',
-    //         headers: {
-    //           'Content-Type': 'application/json'
-    //         },
-    //         body: JSON.stringify(categories)
-    //       })
-    //       .then(response => {
-    //         if(!response.ok) {
-    //           throw new Error('Network response was not ok');
-    //         }
-    //         console.log('Categories sent to server');
-    //       })
-    //       .catch(error => {
-    //         console.error('Error sending categories to server:', error);
-    //       });
-    //   }
+        function handleChange(event) {
+            setCategory(event.target.value);
+          }
 
-
-    // function displayCategories() {
-    //     fetchItems()
-    //       .then((items) => {
-    //         getListOfCategories(items); })
-    //       .catch((error) => console.log("Error: ", error));
-    //   }
-
-    
 
     return(
         <div>
-          <form type="submit">
-            <table>
-                <thead> 
-                  <td>name</td>
-                </thead>
-                <tbody>
-                  <td></td>
-                </tbody>
-            </table>
+
+            {  
+            category.map((category, index) => {
+                    return(
+                        <div key={index}>
+                            <h5>{category}</h5>
+                        </div>
+                     )
+                })
+            }
+
+
+          <form onSubmit={(event) => handleSubmit(event)}>
+            <div className="row mb-3">
+                <label className="col-sm-4 col-form-label">Category</label>
+                <div className="col-sm-8">
+                    <input type="text" className="form-control" name="categories" />
+                </div>
+
+            </div>
+
 
           </form>
 
 
-        <button className="btn btn-primary" onClick={displayCategories}> get list</button>
+        {/* <button className="btn btn-primary" > get list</button> */}
             <form action="">
                    
             <div className="row">

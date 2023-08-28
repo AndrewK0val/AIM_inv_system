@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Card from "./card";
+import Sidebar from "./sidebar";
 import Dashboard from "./dashboard";
 import exportFromJSON from 'export-from-json'
 import axios from "axios";
@@ -14,14 +15,6 @@ export default function CardsList(props){
     const [stats, setStats] = useState(null);
     const [data, setData] = useState([])
 
-    // const loadItemsData = async () => {
-    //     return await axios
-    //         .get("http://192.168.0.174:3004/items/")
-    //         .then((response) => setData(response.data))
-    //         .catch((err) => console.log(err))
-    // }
-
-    console.log("data", data)
 
   
     function fetchItems() {
@@ -56,6 +49,7 @@ export default function CardsList(props){
         }
         return count;
     }
+
   
     function displayStats() {
       fetchItems()
@@ -86,88 +80,33 @@ export default function CardsList(props){
         props.showForm(item);
       }
 
-      function sortItemsByCategory(items){
-
-
+      function valueItem(items){
+        var value = 0;
+        for(const item of items){
+          if(item.price_type === 'pack'){
+            value += item.price / item.items_in_pack * item.quantity;
+          } else {
+            value += item.price * item.quantity;
+          }
+        }
+        return value.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 }).replace(/\B(?=(\d{3})+(?!\d))/g, "'");
       }
-
-
-
-
-
   
     return (
       <div>
-        {/* <div id="buttonContainer">
 
-            <h2>Inventory</h2>
-            <div className="divBar"></div>
-                <h4 className="text-center mb-3" id="stats-1">
-                    {stats ? `${stats.itemsInStock} types of items ` : "Loading..."}{" "}
-                </h4>
-                <h5 className="text-center mb-3" id="stats-1">
-                    {stats ? `${stats.totalItems} total items in stock` : "Loading..."}{" "}
-                </h5>
-            <div className="rowOfOptions">
-                <button
-                    onClick={() => props.showForm({})}
-                    type="button"
-                    className="btn btn-primary me-2"
-                >
-                    {" "}
-                    Add Items
-                </button>
-                <button
-                    onClick={() => fetchItems().then((data) => setItem(data))}
-                    type="button"
-                    className="btn btn-primary me-2"
-                >
-                    {" "}
-                    Refresh
-                </button>
-                <button
-                    type="button"
-                    onClick={() => {
-                    exportFromJSON({
-                        data: item,
-                        fileName: "download",
-                        exportType: exportFromJSON.types.csv,
-                    });
-                    }}
-                    className="btn btn-primary me-2"
-                >
-                    {" "}
-                    Export CSV{" "}
-                </button>
-                <button type="button" className="btn btn-primary me-2">
-                    {" "}
-                    Import CSV{" "}
-                </button>
-
-                <button type="button" className="btn btn-primary me-2">Add category</button>
-
-                <div className="sortByMenu">
-                    <p>Sort by:</p>
-                    <select type="button" name="sort by:"  id="sortSelector">
-                        <option value="category">category</option>
-                        <option value="brand">brand</option>
-                        <option value="price-hl">price (highest to lowest)</option>
-                        <option value="price-lh">price (lowest to highest)</option>
-                    </select>
-                    </div>
-            </div>
-        </div> */}
-
-        {/* <Dashboard showForm={showForm} /> */}
+        {/* <Sidebar categories={category} /> */}
         <div className="categoryDiv">
           {category.map((category, id) => {
             // Filter the items that match the current category
             const filteredItems = item.filter((item) => item.category === category);
             const typesOfItems = filteredItems.length;
+            const totalValueInCategory = valueItem(filteredItems);
             const numberOfItemsPerCategory = countItemsInStock(filteredItems);
             return (
               <>
                 <h1>  {category} - {typesOfItems} {typesOfItems === 1 ? 'Type' : 'Types'}, {numberOfItemsPerCategory} {numberOfItemsPerCategory === 1 ? 'item' : 'items'}</h1>
+                <h5>value: € {totalValueInCategory}</h5>
                 <div className="divBar-thin"></div>
                 {filteredItems.map((item, id) => (
 

@@ -55,6 +55,19 @@ export default function Dashboard(props){
       }
 
 
+      function valueItem(items){
+        var value = 0;
+        for(const item of items){
+          if(item.price_type === 'pack'){
+            value += item.price / item.items_in_pack * item.quantity;
+          } else {
+            value += item.price * item.quantity;
+          }
+        }
+        return value.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 }).replace(/\B(?=(\d{3})+(?!\d))/g, "'");
+      }
+
+
     return(
         <div id="buttonContainer">
 
@@ -66,6 +79,8 @@ export default function Dashboard(props){
             <h5 className="text-center mb-3" id="stats-1">
                 {stats ? `${stats.totalItems} total items in stock` : "Loading..."}{" "}
             </h5>
+
+            <h4 id="stats-1">total value: €{valueItem(item)}</h4>
             <div className="divBar-thin"></div>
 
         <div className="rowOfOptions">

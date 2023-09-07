@@ -80,7 +80,7 @@ function ItemList(props){
                     <tr>
                         <th>Item Name</th>
                         <th>Brand</th>
-                        <th>Barcode</th>
+                        {/* <th>Barcode</th> */}
                         <th>Item Quantity</th>
                         <th>Item Price</th>
                         <th>Actions</th>
@@ -93,7 +93,7 @@ function ItemList(props){
                                 <tr key={index}>
                                     <td>{item.name}</td>
                                     <td>{item.brand}</td>
-                                    <td id="barcodeTd"><Barcode height={30 + 'px'} width={1 + 'px'} fontSize={14 + 'pt'} value={item.barcode} className="barcode" /></td>
+                                    {/* <td id="barcodeTd"><Barcode height={30 + 'px'} width={1 + 'px'} fontSize={14 + 'pt'} value={item.barcode} className="barcode" /></td> */}
                                     <td>{item.quantity}</td>
                                     <td>€{item.price}</td>
                                     <td >

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import CategorySelect from "./categorySelect";
+import UploadWidget from "./UploadWidget";
 
 export default function ItemForm(props) {
   const [errorMessage, setErrorMessage] = useState("");
@@ -18,7 +19,6 @@ export default function ItemForm(props) {
       price_type: value,
     }));
   }
-
   // Fetch categories from server
   function fetchCategories() {
     return fetch("http://192.168.0.174:3006/categories/").then((response) => {
@@ -62,12 +62,11 @@ export default function ItemForm(props) {
     }
 
     if (isNaN(item.quantity)) {
-      setErrorMessage(
-        <div className="alert alert-warning" role="alert">
-          Please enter a number.
-        </div>
-      );
-      return;
+      // setErrorMessage(
+      //   <div className="alert alert-warning" role="alert">
+      //     Please enter a number.
+      //   </div>
+      item.quantity == 0;
     }
 
     if (props.item.id) {
@@ -110,21 +109,29 @@ export default function ItemForm(props) {
         });
     }
   }
-
   // Handle change in input fields
   function handleChange(event) {
     const { name, value } = event.target;
     setItem((prevItem) => ({
       ...prevItem,
-      [name]: value,
+      [name]: value < 0 ? 0 : value,
+    }));
+  }
+
+  // Handle image upload
+  function handleImageUpload(url) {
+    setItem((prevItem) => ({
+      ...prevItem,
+      image: url,
     }));
   }
 
   return (
-    <div className="container my-5">
+    <div className="container my-5" id="itemForm">
       <h2 className="text-center mb-3">
-        {props.item.id ? "Edit Item" : "Create New Item"}
+        {props.item.id ? "Edit Item ✏️" : "Create New Item 🪄"}
       </h2>
+      <div className="divBar-thin"></div>
 
       <div className="row">
         <div className="col-lg-6 mx-auto">
@@ -183,31 +190,32 @@ export default function ItemForm(props) {
               <label className="col-sm-4 col-form-label">Price</label>
               <div className="col-sm-8">
                 <div className="priceOptions">
-                  €
+                  
                   <input
                     type="number"
-                    className="col-sm-4"
+                    className="col-sm form-control"
+                    placeholder="€"
                     name="price"
                     value={item.price}
                     onChange={handleChange}
                   />
-                  <p>per</p>
+                  <p> per </p>
                   <select
-                    className="col"
+                    className="col-sm form-control"
                     name="price_type"
                     id=""
-                    value={item.price_type}
+                    defaultValue={item.price_type}
                     onChange={handlePriceTypeChange}
                   >
-                    <option value="single item">Single Item</option>
-                    <option value="pack">Pack</option>
+                    <option value="single item">🪛 Single Item</option>
+                    <option value="pack">📦 Pack</option>
                   </select>
                   {showItemsInPack && <p>of</p>}
 
                   {showItemsInPack && (
                     <input
                       type="number"
-                      className="col-sm-4"
+                      className="col-sm form-control"
                       name="items_in_pack"
                       value={item.items_in_pack}
                       onChange={handleChange}
@@ -243,24 +251,20 @@ export default function ItemForm(props) {
                   onChange={handleChange}
                 />
               </div>
+                <UploadWidget onUpload={handleImageUpload} />
             </div>
 
-            <div className="row">
-              <div className="col-sm-4 d-grid">
-                <button
-                  onClick={() => props.showList()}
-                  type="button"
-                  className="btn btn-secondary me-2"
-                >
-                  Cancel
-                </button>
-              </div>
-              <div className="col-sm-4 d-grid">
-                <button type="submit" className="btn btn-primary me-2">
-                  Save
-                </button>
-              </div>
-            </div>
+            <button
+              onClick={() => props.showList()}
+              type="button"
+              className="btn btn-secondary me-2"
+            >
+              ❌ Cancel
+            </button>
+            <button type="submit" className="btn btn-primary me-2">
+              💾 Save
+            </button>
+            <div className="row"></div>
           </form>
         </div>
       </div>

@@ -48,15 +48,29 @@ export default function Card(props) {
 
 
   function increaseQuantity(item){
-    const updatedItem = {...item, quantity: count + 1}
-    setCount(prevCount => prevCount + 1)
-    updateItem(updatedItem)
+    const updatedCount = count + 1;
+    if (updatedCount < 0) {
+      const updatedItem = {...item, quantity: 0};
+      setCount(0);
+      updateItem(updatedItem);
+    } else {
+      const updatedItem = {...item, quantity: updatedCount};
+      setCount(updatedCount);
+      updateItem(updatedItem);
+    }
   }
-
+  
   function decreaseQuantity(item){
-    const updatedItem = {...item, quantity: count - 1}
-    setCount(prevCount  => prevCount - 1)
-    updateItem(updatedItem)
+    const updatedCount = count - 1;
+    if (updatedCount < 0) {
+      const updatedItem = {...item, quantity: 0};
+      setCount(0);
+      updateItem(updatedItem);
+    } else {
+      const updatedItem = {...item, quantity: updatedCount};
+      setCount(updatedCount);
+      updateItem(updatedItem);
+    }
   }
 
   
@@ -87,14 +101,17 @@ export default function Card(props) {
           <div className="inStockLabel" onClick={() => props.editCSV(item)}> 
             {count === 0 ? (
               <div className="outOfStockLabel" onClick={() => props.editCSV(item)}>
-                <h5>out of stock</h5></div>
+                <h5>⚠️out of stock⚠️</h5></div>
             ):(
               <div> in stock</div>)
             }
           </div>
+            {/* <div className="barcode"> */}
 
             <Barcode height={50 + 'px'} value={item.barcode}   className="barcode" />
-        </div>
+
+            {/* </div> */}
+          </div>
           <div className="divBar-thin"></div>
 
 
@@ -102,7 +119,7 @@ export default function Card(props) {
         <h5>vaule: € {valueItem(item)}</h5>
         {/* <a href="" className="btn btn-primary"> vendor website</a> */}
       </div>
-      <button onClick={() => props.deleteItem(item.id)} type="button" className="btn btn-danger me-2" id="invButton" > Delete</button>
+      <button onClick={() => props.deleteItem(item.id)} type="button" className="btn btn-danger me-2" id="invButton" >Delete</button>
 
     </div>
   );

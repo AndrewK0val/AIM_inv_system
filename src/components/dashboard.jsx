@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import exportFromJSON from 'export-from-json'
-
+import { event } from "jquery";
+import { Items } from "./items";
+import { useSearch } from '../SearchContext'
 
 
 export default function Dashboard(props){
-    // const item = props
-    const [item, setItem] = useState([]);
+  const { searchQuery, handleSearch } = useSearch();
+  const [item, setItem] = useState([]);
+  const [stats, setStats] = useState(null);
 
-    const [stats, setStats] = useState(null);
+  
 
     function fetchItems() {
         return fetch("http://192.168.0.174:3004/items/").then((response) => {
@@ -31,7 +34,7 @@ export default function Dashboard(props){
                   count += quantity;
               }
           }
-          return count;
+          return count.toLocaleString("en-US").replace(/\B(?=(\d{3})+(?!\d))/g, "'");
       }
     
       function displayStats() {
@@ -46,8 +49,10 @@ export default function Dashboard(props){
     
       useEffect(() => {
         fetchItems().then((data) => setItem(data));
+          console.log("searchQuery in Dashboard:", props.searchQuery);
+
         displayStats();
-      }, []);
+      }, [props.searchQuery]);
 
       function handleClick(item) {
         console.log("clicked");
@@ -69,18 +74,17 @@ export default function Dashboard(props){
 
 
     return(
-        <div id="buttonContainer">
-
+      <div id="buttonContainer">
         <h2>Inventory</h2>
         <div className="divBar"></div>
             <h4 className="text-center mb-3" id="stats-1">
-                {stats ? `${stats.itemsInStock} types of items ` : "Loading..."}{" "}
+                {stats ? `${stats.itemsInStock} Item Types ` : "Loading..."}{" "}
             </h4>
             <h5 className="text-center mb-3" id="stats-1">
-                {stats ? `${stats.totalItems} total items in stock` : "Loading..."}{" "}
+                {stats ? `${stats.totalItems} Total Items in Stock` : "Loading..."}{" "}
             </h5>
 
-            <h4 id="stats-1">total value: €{valueItem(item)}</h4>
+            <h4 id="stats-1">Total Stock Value: €{valueItem(item)}</h4>
             <div className="divBar-thin"></div>
 
         <div className="rowOfOptions">
@@ -121,7 +125,19 @@ export default function Dashboard(props){
 
             <button type="button" className="btn btn-primary me-2" onClick={() => props.showCategoryForm({})}>Add category</button>
 
-            <div className="sortByMenu">
+            <form>
+            <div className="form-group">
+              <input
+                type="text"
+                className="form-control"
+                placeholder="🔍 Search Stock"
+                value={searchQuery}
+                onChange={(e) => handleSearch(e.target.value)}
+              />
+            </div>
+          </form>
+
+            {/* <div className="sortByMenu">
                 Sort by:
                 <select type="button" name="sort by:"  id="sortSelector">
                     <option value="category">category</option>
@@ -129,14 +145,22 @@ export default function Dashboard(props){
                     <option value="price-hl">price (highest to lowest)</option>
                     <option value="price-lh">price (lowest to highest)</option>
                 </select>
-                </div>
+                </div> */}
         </div>
-            <div className="dashboardButtonRow2">
-             <form class="d-flex">
-                <input class="form-control me-2" type="search" placeholder="Search Items" aria-label="Search" />
-                <button class="btn btn-outline-success" type="submit">Search</button>
-             </form>
-            </div>
+        
+             {/* <div className="dashboardButtonRow2">
+              <form>
+                <div className="form-group">
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="🔍 Search Stock"
+                    value={searchQuery}
+                    onChange={handleSearch}
+                  />
+                </div>
+              </form>
+            </div>  */}
 
     </div>
     )    

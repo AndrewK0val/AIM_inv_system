@@ -5,11 +5,13 @@ import {Home} from './components/home.jsx';
 import {Items} from './components/items.jsx';
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
 import './index.css';
+import { SearchProvider } from './SearchContext'; // Import your context
+
 
 
 function App(){
   return (
-    <div>
+    <>
       <BrowserRouter>
         <Navbar />
         <Routes>
@@ -18,14 +20,19 @@ function App(){
         </Routes>
         <Footer />
       </BrowserRouter>
-    </div>
+
+    </>
   );
 }
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
+  
   <React.StrictMode>
+    <SearchProvider>
     <App />
+  </SearchProvider>
   </React.StrictMode>
+
 );
 

@@ -39,11 +39,11 @@ export function Home(props){
     const [categoryContent, setCategoryContent] = useState()
 
     function showList(){
-
         setContent(
           <>
         {/* <Dashboard showForm={showForm} showSearchResults={showSearchResults}  /> */}
-        <CardsList showForm={showForm}  />
+        <CardsList showForm={showForm}   showCategoryForm={showCategoryForm}
+  />
           </>
         );
       }
@@ -74,17 +74,17 @@ export function Home(props){
       //   setSearchQuery(event.target.value);
       // }
       
-      function fetchCategories() {
-        return fetch("http://192.168.0.174:3006/categories/").then((response) => {
-          if (!response.ok) {
-            throw new Error("Unexpected Server response");
-          }
-          return response.json();
-        });
-      }
+    //   function fetchCategories() {
+    //     return fetch("http://192.168.0.174:3006/categories/").then((response) => {
+    //       if (!response.ok) {
+    //         throw new Error("Unexpected Server response");
+    //       }
+    //       return response.json();
+    //     });
+    //   }
 
-    useEffect(() => {fetchCategories().then((data) => setCategory(data));
-    }, []);
+    // useEffect(() => {fetchCategories().then((data) => setCategory(data));
+    // }, []);
     
     return(
       <>

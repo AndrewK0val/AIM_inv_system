@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from "react";
 import Barcode from 'react-barcode';
 import { Items } from "./items";
-import {Home} from "./home";
-import { event } from "jquery";
+// import {Home} from "./home";
+import { API_ITEMS_URL, API_CATEGORIES_URL } from "./config";
 
-var IpAddress = "localhost";
-// var IpAddress = "192.168.0.174";
+
+
 
 export default function Card(props) {
   const { item } = props;
@@ -17,7 +17,7 @@ export default function Card(props) {
   function updateItem(item){
     if(item.id){
       //update the item
-      fetch("http://192.168.0.174:3004/items/" + item.id, {
+      fetch(API_ITEMS_URL + item.id, {
         method: "PATCH",
         headers:{
           "Content-Type": "application/json"

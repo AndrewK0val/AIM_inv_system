@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import CategorySelect from "./categorySelect";
 import UploadWidget from "./UploadWidget";
+import { API_ITEMS_URL, API_CATEGORIES_URL } from "./config";
+
 
 export default function ItemForm(props) {
   const [errorMessage, setErrorMessage] = useState("");
@@ -21,7 +23,7 @@ export default function ItemForm(props) {
   }
   // Fetch categories from server
   function fetchCategories() {
-    return fetch("http://192.168.0.174:3006/categories/").then((response) => {
+    return fetch(API_CATEGORIES_URL).then((response) => {
       if (!response.ok) {
         throw new Error("Unexpected Server response");
       }
@@ -42,15 +44,17 @@ export default function ItemForm(props) {
     if (
       !item.name ||
       !item.barcode ||
-      !item.quantity ||
+      // !item.quantity ||
       !item.category ||
       !item.price_type ||
-      !item.price
+      !item.price ||
+      (item.price_type === "pack" && !item.items_in_pack)
+
     ) {
       console.log("please fill out all fields");
       setErrorMessage(
         <div className="alert alert-warning" role="alert">
-          Please fill out all fields.
+         ⚠️ Please fill out required fields.
         </div>
       );
       return;
@@ -71,7 +75,7 @@ export default function ItemForm(props) {
 
     if (props.item.id) {
       // Update the item
-      fetch("http://192.168.0.174:3004/items/" + props.item.id, {
+      fetch(API_ITEMS_URL + props.item.id, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -90,7 +94,7 @@ export default function ItemForm(props) {
         });
     } else {
       // Create new item
-      fetch("http://192.168.0.174:3004/items", {
+      fetch(API_ITEMS_URL, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -134,9 +138,9 @@ export default function ItemForm(props) {
       <div className="divBar-thin"></div>
 
       <div className="row">
-        <div className="col-lg-6 mx-auto">
-          {errorMessage}
+        <div className="col-lg-6 mx-auto" id="form-content">
           <form onSubmit={(event) => handleSubmit(event)}>
+          {errorMessage}
             <div className="row mb-3">
               <label className="col-sm-4 col-form-label">Name *</label>
               <div className="col-sm-8">
@@ -189,7 +193,7 @@ export default function ItemForm(props) {
             <div className="row mb-3">
               <label className="col-sm-4 col-form-label">Price</label>
               <div className="col-sm-8">
-                <div className="priceOptions">
+                <div id="inlineOptions">
                   
                   <input
                     type="number"
@@ -240,9 +244,9 @@ export default function ItemForm(props) {
               </div>
             </div>
 
-            <div className="row mb-3">
+            <div className="row mb-3" >
               <label className="col-sm-4 col-form-label">Image Url</label>
-              <div className="col-sm-8">
+              <div className="col-sm-8" id="inlineOptions">
                 <input
                   type="url"
                   className="form-control"

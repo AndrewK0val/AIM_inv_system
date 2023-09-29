@@ -4,6 +4,8 @@ import ItemForm from "./item-form";
 import CategoryForm from "./category-form";
 
 import Dashboard from "./dashboard";
+import { API_ITEMS_URL, API_CATEGORIES_URL } from "./config";
+
 
 // var IpAddress = "localhost";
 var IpAddress = "192.168.0.174";
@@ -48,7 +50,7 @@ function ItemList(props){
     const [item, setItem] = useState([]);
 
     function fetchItems(){
-        fetch ('http://' + IpAddress +':3004/items')
+        fetch (API_ITEMS_URL)
         .then(response => {
             if(!response.ok)
                 throw new Error("Unexpected Server response")
@@ -62,7 +64,7 @@ function ItemList(props){
     }
     useEffect(() => fetchItems(), []);
     function deleteItem(id){
-        fetch('http://' + IpAddress +':3004/items' + id, {method: "DELETE"})
+        fetch(API_ITEMS_URL + id, {method: "DELETE"})
         .then((response) => response.json())
         .then((data) => fetchItems())
     }
